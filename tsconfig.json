@@ -1,0 +1,33 @@
+{
+  "moduleResolution": "node",
+  "compilerOptions": {
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ],
+    "target": "ES2020",
+    // 编译目标
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    // 输出目录
+    "strict": true,
+    // 启用所有严格类型检查选项
+    "esModuleInterop": true,
+    // 允许默认导入非模块
+    "skipLibCheck": true,
+    // 跳过库文件检查
+    "forceConsistentCasingInFileNames": true
+    // 强制文件名的大小写一致性
+  },
+  "include": [
+    "src/**/*"
+    // 包含 src 文件夹中的所有文件
+  ],
+  "exclude": [
+    "**/*.spec.ts"
+    // 排除测试文件
+  ]
+}

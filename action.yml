@@ -1,0 +1,76 @@
+name: 'AI Code Reviewer (AiReviewPR)'
+description: 'Perform code review using openai API'
+author: kekxv
+
+inputs:
+  repository:
+    description: 'Repository name with owner. For example, actions/checkout'
+    default: ${{ github.repository }}
+  BASE_REF:
+    description: 'github event pull_request base ref'
+    default: ${{ github.event.pull_request.base.ref }}
+  PULL_REQUEST_NUMBER:
+    description: 'github event pull_request number'
+    default: ${{ github.event.pull_request.number }}
+  CHINESE:
+    description: 'use chines'
+    default: "true"
+  token:
+    description: >
+      Personal access token (PAT) used to fetch the repository. The PAT is configured
+      with the local git config, which enables your scripts to run authenticated git
+      commands. The post-job step removes the PAT.
+
+
+      We recommend using a service account with the least permissions necessary.
+      Also when generating a new PAT, select the least scopes necessary.
+
+
+      [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+    default: ${{ github.token }}
+  model:
+    description: 'AI model to use for code review'
+    required: true
+    default: 'gemma2:2b'
+  host:
+    description: 'ollama host'
+    required: true
+    default: 'http://127.0.0.1:11434'
+  reviewers_prompt:
+    description: 'ollama system prompt'
+    required: false
+    default: >
+      You are an expert developer, your task is to review a set of pull requests.
+      You are given a list of filenames and their partial contents, but note that you might not have the full context of the code.
+      
+      Only review lines of code which have been changed (added or removed) in the pull request. The code looks similar to the output of a git diff command. Lines which have been removed are prefixed with a minus (-) and lines which have been added are prefixed with a plus (+). Other lines are added to provide context but should be ignored in the review.
+      
+      Begin your review by evaluating the changed code using a risk score similar to a LOGAF score but measured from 1 to 5, where 1 is the lowest risk to the code base if the code is merged and 5 is the highest risk which would likely break something or be unsafe.
+      
+      In your feedback, focus on highlighting potential bugs, improving readability if it is a problem, making code cleaner, and maximising the performance of the programming language. Flag any API keys or secrets present in the code in plain text immediately as highest risk. Rate the changes based on SOLID principles if applicable.
+      
+      Do not comment on breaking functions down into smaller, more manageable functions unless it is a huge problem. Also be aware that there will be libraries and techniques used which you are not familiar with, so do not comment on those unless you are confident that there is a problem.
+      
+      Use markdown formatting for the feedback details. Also do not include the filename or risk level in the feedback details.
+      
+      Ensure the feedback details are brief, concise, accurate. If there are multiple similar issues, only comment on the most critical.
+      
+      Include brief example code snippets in the feedback details for your suggested changes when you're confident your suggestions are improvements. Use the same programming language as the file under review.
+      If there are multiple improvements you suggest in the feedback details, use an ordered list to indicate the priority of the changes.
+      
+      Please respond without using "```markdown"
+  ai_token:
+    description: 'ai token'
+    required: false
+    default: " "
+  include_files:
+    description: 'Comma-separated list of files to include review'
+    required: false
+    default: " "  # 默认为空，表示不限制
+  exclude_files:
+    description: 'Comma-separated list of files to exclude review'
+    required: false
+    default: " "  # 默认为空，表示不传递文件
+runs:
+  using: node20
+  main: 'dist/index.js'

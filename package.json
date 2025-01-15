@@ -1,0 +1,14 @@
+{
+  "name": "hello-world-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.6",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+  }
+}
