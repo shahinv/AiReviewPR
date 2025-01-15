@@ -7,13 +7,12 @@ exports.post = exports.doesAnyPatternMatch = exports.split_message = void 0;
 const http_1 = __importDefault(require("http"));
 const https_1 = __importDefault(require("https"));
 function split_message(files) {
-    console.log("files debug:", files);
     files = files.trim();
     if (!files) {
         let t = files.split("\n");
         if (t.length > 0)
-            return t.map(str => str.trim());
-        return files.split(",").map(str => str.trim());
+            return t.map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "");
+        return files.split(",").map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "");
     }
     return [];
 }

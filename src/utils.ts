@@ -2,12 +2,11 @@ import http from "http";
 import https from "https";
 
 export function split_message(files: string) {
-  console.log("files debug:",files)
   files = files.trim()
   if (!files) {
     let t = files.split("\n");
-    if (t.length > 0) return t.map(str => str.trim());
-    return files.split(",").map(str => str.trim())
+    if (t.length > 0) return t.map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "");
+    return files.split(",").map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "")
   }
   return []
 }
