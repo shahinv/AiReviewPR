@@ -2,11 +2,15 @@ import {execSync} from "node:child_process";
 import {doesAnyPatternMatch, post, split_message} from "./utils";
 import {take_system_prompt} from "./prompt";
 
-const useChinese = (process.env.INPUT_CHINESE || "true").toLowerCase() != "false"; // use chinese
+let useChinese = (process.env.INPUT_CHINESE || "true").toLowerCase() != "false"; // use chinese
+const language = !process.env.INPUT_CHINESE ? (process.env.INPUT_LANGUAGE || "Chinese") : (useChinese ? "Chinese" : "English");
+const prompt_genre = (process.env.INPUT_PROMPT_GENRE || "");
+const reviewers_prompt = (process.env.INPUT_REVIEWERS_PROMPT || "");
+useChinese = language.toLowerCase() === "chinese"
 const include_files = split_message(process.env.INPUT_INCLUDE_FILES || "");
 const exclude_files = split_message(process.env.INPUT_EXCLUDE_FILES || "");
 
-const system_prompt = take_system_prompt(useChinese);
+const system_prompt = reviewers_prompt || take_system_prompt(prompt_genre, language);
 
 // 获取输入参数
 const url = process.env.INPUT_HOST; // INPUT_HOST 是从 action.yml 中定义的输入
@@ -89,7 +93,14 @@ async function aiCheckDiffContext() {
           throw "ollama error";
         }
         let Review = useChinese ? "审核结果" : "Review";
-        let comments = `# ${Review} \r\n${process.env.GITHUB_SERVER_URL}/${process.env.INPUT_REPOSITORY}/src/commit/${process.env.GITHUB_SHA}/${files[key]} \r\n\r\n\r\n${response.response}`
+        let commit: string = response.response;
+        if (commit.indexOf("```markdown") === 0) {
+          commit = commit.substring("```markdown".length);
+          if (commit.lastIndexOf("```") === commit.length - 3) {
+            commit = commit.substring(0, commit.length - 3);
+          }
+        }
+        let comments = `# ${Review} \r\n${process.env.GITHUB_SERVER_URL}/${process.env.INPUT_REPOSITORY}/src/commit/${process.env.GITHUB_SHA}/${files[key]} \r\n\r\n\r\n${commit}`
         let resp = await pushComments(comments);
         if (!resp.id) {
           // noinspection ExceptionCaughtLocallyJS

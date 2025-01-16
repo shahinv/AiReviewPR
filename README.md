@@ -43,7 +43,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Review code
-        uses: kekxv/AiReviewPR@v0.0.2
+        uses: kekxv/AiReviewPR@v0.0.3
         with:
           model: 'gemma2:2b'
           host: ${{ vars.OLLAMA_HOST }}
@@ -118,6 +118,11 @@ result：
   - **必需**: 否
   - **默认值**: `" "`（默认为空，不传递文件）
 
+12. **PROMPT_GENRE**:
+  - **描述**: 提示模式类型。
+  - **必需**: 否
+  - **默认值**: `" "`（默认为空）
+
 
 ### Input Parameters
 
@@ -170,3 +175,8 @@ result：
   - **Description**: A comma-separated list of files to exclude from the review.
   - **Required**: No
   - **Default Value**: `" "` (empty by default, no files passed)
+
+12. **PROMPT_GENRE**:
+- **描述**: prompt genre
+- **必需**: No
+- **默认值**: `" "` (empty by default)
