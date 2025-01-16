@@ -63,18 +63,15 @@ async function aiCheckDiffContext() {
     let files = diffOutput.trim().split("\n");
     for (let key in files) {
       if (!files[key]) continue;
-      if (include_files.length > 0) {
-        if (!doesAnyPatternMatch(include_files, files[key])) {
-          console.log("exclude(include):", files[key])
-          continue;
-        }
+      console.log("check diff context:", files[key])
+      if ((include_files.length > 0) && (!doesAnyPatternMatch(include_files, files[key]))) {
+        console.log("exclude(include):", files[key])
+        continue;
+      } else if ((exclude_files.length > 0) && (doesAnyPatternMatch(exclude_files, files[key]))) {
+        console.log("exclude(exclude):", files[key])
+        continue;
       }
-      if (exclude_files.length > 0) {
-        if (doesAnyPatternMatch(exclude_files, files[key])) {
-          console.log("exclude(exclude):", files[key])
-          continue;
-        }
-      }
+
       const fileDiffOutput = execSync(`git diff origin/${BASE_REF}...HEAD -- "${files[key]}"`, {encoding: 'utf-8'});
       // ai generate
       try {
