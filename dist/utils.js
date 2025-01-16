@@ -7,14 +7,19 @@ exports.post = exports.doesAnyPatternMatch = exports.split_message = void 0;
 const http_1 = __importDefault(require("http"));
 const https_1 = __importDefault(require("https"));
 function split_message(files) {
+    files = files || "";
+    let n = files.includes('\n') || files.includes('\r');
     files = files.trim();
-    if (!files) {
-        let t = files.split("\n");
-        if (t.length > 0)
-            return t.map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "");
-        return files.split(",").map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "");
+    let res = [];
+    if (files) {
+        if (n) {
+            res = files.split(/[\r\n]/);
+        }
+        else {
+            res = files.split(",");
+        }
     }
-    return [];
+    return res.map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "");
 }
 exports.split_message = split_message;
 function doesAnyPatternMatch(patterns, str) {

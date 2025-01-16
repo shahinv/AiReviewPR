@@ -5,7 +5,8 @@
       "node_modules/@types"
     ],
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "target": "ES2020",
     // 编译目标

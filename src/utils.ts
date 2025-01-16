@@ -1,14 +1,19 @@
 import http from "http";
 import https from "https";
 
-export function split_message(files: string) {
+export function split_message(files: string): string[] {
+  files = files || "";
+  let n = files.includes('\n') || files.includes('\r');
   files = files.trim()
-  if (!files) {
-    let t = files.split("\n");
-    if (t.length > 0) return t.map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "");
-    return files.split(",").map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "")
+  let res: string[] = [];
+  if (files) {
+    if (n) {
+      res = files.split(/[\r\n]/);
+    } else {
+      res = files.split(",")
+    }
   }
-  return []
+  return res.map(str => str.trim()).filter(item => item !== null && item !== undefined && item !== "")
 }
 
 export function doesAnyPatternMatch(patterns: Array<string>, str: string) {
