@@ -49,12 +49,13 @@ async function post({ url, body, header, json }) {
         header['Content-Length'] = Buffer.byteLength(data);
         const options = {
             hostname: url_.hostname,
+            port: url_.port,
             path: url_.pathname + (url_.search || ''),
             method: 'POST',
             headers: header
         };
         // noinspection DuplicatedCode
-        const req = (url_.protocol === "http" ? http_1.default : https_1.default).request(options, (res) => {
+        const req = (url_.protocol === "http:" ? http_1.default : https_1.default).request(options, (res) => {
             let responseBody = '';
             res.on('data', (chunk) => {
                 responseBody += chunk;
