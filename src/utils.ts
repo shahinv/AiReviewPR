@@ -43,13 +43,14 @@ export async function post({url, body, header, json}: any): Promise<string> {
     header['Content-Length'] = Buffer.byteLength(data)
     const options = {
       hostname: url_.hostname, // 确保去掉协议部分
+      port: url_.port,
       path: url_.pathname + (url_.search || ''),
       method: 'POST',
       headers: header
     };
 
     // noinspection DuplicatedCode
-    const req = (url_.protocol === "http" ? http : https).request(options, (res) => {
+    const req = (url_.protocol === "http:" ? http : https).request(options, (res) => {
       let responseBody = '';
 
       res.on('data', (chunk) => {
