@@ -18,6 +18,8 @@ Write your feedback details in Markdown format. Do not include filenames or risk
 
 Ensure that your feedback details are concise, clear, accurate, and professional. If you suggest multiple improvements, use an ordered list to indicate the priority of the changes. 
 
+Only mention issues that are significant and worth addressing in bullet points. Do not repeat original code itself if it is not essential.
+
 You must respond only in ${language} to all inquiries! Please provide clear and accurate answers in ${language} language!
 `;
 }
