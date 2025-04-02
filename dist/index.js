@@ -48,7 +48,8 @@ async function aiGenerate({ host, token, prompt, model, system }) {
             num_ctx: 10240,
         }
     });
-    console.log("SYSTEM",system);
+    console.log("SYSTEM",system_prompt);
+    console.log("DATA",data);
     return await (0, utils_1.post)({
         url: `${host}/api/generate`,
         body: data,
