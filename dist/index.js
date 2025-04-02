@@ -141,7 +141,7 @@ async function aiCheckDiffContext() {
                 }
                 let Review = useChinese ? "审核结果" : "Review";
                 let commit = response.response;
-                console.log("PROMPT",item.context,"RESPONSE",commit);
+                console.log("SYSTEM",response.system,"PROMPT",item.context,"RESPONSE",commit);
                 if (commit.indexOf("```markdown") === 0) {
                     commit = commit.substring("```markdown".length);
                     if (commit.lastIndexOf("```") === commit.length - 3) {
