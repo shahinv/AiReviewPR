@@ -40,13 +40,13 @@ async function aiGenerate({ host, token, prompt, model, system }) {
         model: model,
         stream: false,
         system: system || system_prompt,
-        options: {
+        /*options: {
             tfs_z: 1.5,
             top_k: 30,
             top_p: 0.8,
             temperature: 0.7,
             num_ctx: 10240,
-        }
+        }*/
     });
     console.log("SYSTEM",system_prompt);
     console.log("DATA",data);
