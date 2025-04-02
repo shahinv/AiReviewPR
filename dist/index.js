@@ -48,7 +48,6 @@ async function aiGenerate({ host, token, prompt, model, system }) {
             num_ctx: 10240,
         }*/
     });
-    console.log("SYSTEM",system_prompt);
     console.log("DATA",data);
     return await (0, utils_1.post)({
         url: `${host}/api/generate`,
@@ -143,7 +142,6 @@ async function aiCheckDiffContext() {
                 }
                 let Review = useChinese ? "审核结果" : "Review";
                 let commit = response.response;
-                console.log("SYSTEM",response.system,"PROMPT",item.context,"RESPONSE",commit);
                 if (commit.indexOf("```markdown") === 0) {
                     commit = commit.substring("```markdown".length);
                     if (commit.lastIndexOf("```") === commit.length - 3) {
