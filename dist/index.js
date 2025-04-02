@@ -61,7 +61,7 @@ async function getPrDiffContext() {
     try {
         (0, node_child_process_1.execSync)(`git fetch origin ${BASE_REF}`, { encoding: 'utf-8' });
         // exec git diff get diff files
-        const diffOutput = (0, node_child_process_1.execSync)(`git diff --name-only origin/${BASE_REF}...HEAD`, { encoding: 'utf-8' });
+        const diffOutput = (0, node_child_process_1.execSync)(`git diff $(git merge-base origin/${BASE_REF} HEAD) HEAD`, { encoding: 'utf-8' });
         let files = diffOutput.trim().split("\n");
         for (let key in files) {
             // noinspection DuplicatedCode
@@ -75,7 +75,7 @@ async function getPrDiffContext() {
                 console.log("exclude(exclude):", files[key]);
                 continue;
             }
-            const fileDiffOutput = (0, node_child_process_1.execSync)(`git diff origin/${BASE_REF}...HEAD -- "${files[key]}"`, { encoding: 'utf-8' });
+            const fileDiffOutput = (0, node_child_process_1.execSync)(`git diff $(git merge-base origin/${BASE_REF} HEAD) HEAD -- "${files[key]}"`, { encoding: 'utf-8' });
             items.push({
                 path: files[key],
                 context: fileDiffOutput,
