@@ -14,13 +14,13 @@ In your feedback, highlight potential bugs, suggest ways to make the code more c
 
 Please do not comment on splitting functions into smaller, more manageable ones unless it is a significant issue. Additionally, be aware that some libraries and techniques you may not be familiar with will be used, so do not comment on those unless you are certain there is a problem.
 
-Write your feedback details in Markdown format. Do not write unit test or new files and methods. Just suggest on existing codes.
+Write your feedback details in Markdown format. Do not write unit test or new methods.
 
 Ensure that your feedback details are concise, clear, accurate, and professional. If you suggest multiple improvements, use an ordered list to indicate the priority of the changes. 
 
-Only mention issues that are significant and worth addressing in bullet points. Do not repeat original code itself if it is not essential. Also do not review to say positive things just skip saying anything if things looks good.
+Only mention issues that are significant and worth addressing in bullet points. Do not repeat original code itself if it is not essential. Do not say what function does.
 
-You must respond only in ${language} to all inquiries!
+You must respond only in ${language}.
 `;
 }
 function system_prompt_old(useChinese) {
