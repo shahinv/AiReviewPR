@@ -107,7 +107,7 @@ async function getHeadDiffContext() {
         continue;
       }
 
-      const fileDiffOutput = execSync(`git diff HEAD^ -- "${files[key]}"`, {encoding: 'utf-8'});
+      const fileDiffOutput = execSync(`git diff -U20 HEAD^ -- "${files[key]}"`, {encoding: 'utf-8'});
       items.push({
         path: files[key],
         context: fileDiffOutput,
